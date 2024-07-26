@@ -1,0 +1,17 @@
+#Environment 
+.env
+venv
+logs
+# Compiled python modules
+__pycache__/
+
+# pytype static type analyzer
+.pytype/
+
+
+#Local Vector DB index files
+Components\vectordb\index.faiss
+
+Components\Data\Employee_generated_Learning.pdf
+
+Components\Data\Evaluation\Q&A.xlsx
