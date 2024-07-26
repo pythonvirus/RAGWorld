@@ -26,3 +26,4 @@ flask
 openpyxl
 Dataset
 ragas
+arize-phoenix[evals]

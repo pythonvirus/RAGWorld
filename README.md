@@ -14,7 +14,7 @@
 ## How to run?
 
 ```bash
-conda create -n venv python=3.10 -y
+conda activate "C:\Users\Sachin Gupta\OneDrive - ISM eGroup\Documents\2. Personal\projects\DocumentCommunicator\venv"
 ```
 
 ```bash

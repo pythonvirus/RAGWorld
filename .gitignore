@@ -10,8 +10,8 @@ __pycache__/
 
 
 #Local Vector DB index files
-Components\vectordb\index.faiss
-
-Components\Data\Employee_generated_Learning.pdf
-
 Components\Data\Evaluation\Q&A.xlsx
+Data/Employee-generated Learning SECURE (watermarked).pdf
+Components/vectordb/index.faiss/corporate-brain.faiss
+Components/vectordb/index.faiss/corporate-brain.pkl
+Components\vectordb\*
