@@ -26,8 +26,8 @@ def evaluate(ground_truth_file_path,experiment_name):
     result_df.to_csv(File_name, index=False)
 
 if __name__ == '__main__':
-    evaluate("Validation-Data\Q&A.xlsx","gpt-4o-text-embedding-3-small-prompt1")
-    #Service.doc_loader_wrapper()
+    #evaluate("Validation-Data\Q&A.xlsx","gpt-4o-text-embedding-3-small-prompt1")
+    Service.doc_loader_wrapper()
 
 
 
