@@ -75,7 +75,7 @@ class Service(OutputConfig):
             result = chain.invoke({"question": question})
             context1=result['context'][0].page_content
             context2=result['context'][1].page_content
-            context3=result['context'][1].page_content
+            context3=result['context'][2].page_content
             logging.info("Successfully returned the answer from RAG Chain")   
             return result["answer"],context1,context2,context3
        

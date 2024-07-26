@@ -36,6 +36,9 @@ from phoenix.trace import DocumentEvaluations, SpanEvaluations
 from phoenix.trace.langchain import LangChainInstrumentor
 from phoenix.trace.dsl import SpanQuery
 
+from uptrain import EvalLLM, Evals, CritiqueTone, Settings, ResponseMatching
+from Entity.config_entity import APILoaderConfig
+
 
 class Evaluation:
 
@@ -210,7 +213,72 @@ class Evaluation:
             )
         except Exception as e:
             raise CustomException(e, sys) from e
-        
+    
+    @classmethod
+    def uptrain_evaluate_rag_system(cls, question,answer,contexts,ground_truth=None):
+        try:
+            print("uptrain started")            
+            if ground_truth:
+                print("under if")
+                data = [{"question": question,"context": contexts, "response": answer, "ground_truth": ground_truth}]
+                eval_llm = EvalLLM(openai_api_key=APILoaderConfig.OPENAI_API_KEY)
+                result = eval_llm.evaluate(data = data, checks = [Evals.CONTEXT_RELEVANCE, 
+                                                           Evals.RESPONSE_RELEVANCE,
+                                                           Evals.VALID_RESPONSE,
+                                                           Evals.RESPONSE_CONSISTENCY,
+                                                           Evals.RESPONSE_COMPLETENESS,
+                                                           Evals.RESPONSE_CONCISENESS,
+                                                           Evals.RESPONSE_COMPLETENESS_WRT_CONTEXT,
+                                                           Evals.FACTUAL_ACCURACY,
+                                                           Evals.CRITIQUE_LANGUAGE,
+                                                           Evals.CODE_HALLUCINATION,
+                                                           Evals.PROMPT_INJECTION,
+                                                           [ResponseMatching(method = 'llm')]
+                                                          ])
+                return result
+            else:
+                # Specify the file path and name
+                file_path = 'Evaluation\evaluation.csv'
+                print("uptrain started under else")
+                data = [{"question": question,"context": contexts, "response": answer}]
+                eval_llm = EvalLLM(openai_api_key=APILoaderConfig.OPENAI_API_KEY)
+                result = eval_llm.evaluate(data = data, checks = [Evals.CONTEXT_RELEVANCE, 
+                                                           Evals.RESPONSE_RELEVANCE,
+                                                           Evals.VALID_RESPONSE,
+                                                           Evals.RESPONSE_CONSISTENCY,
+                                                           Evals.RESPONSE_COMPLETENESS,
+                                                           Evals.RESPONSE_CONCISENESS,
+                                                           Evals.RESPONSE_COMPLETENESS_WRT_CONTEXT,
+                                                           Evals.FACTUAL_ACCURACY,
+                                                           Evals.CRITIQUE_LANGUAGE,
+                                                           Evals.CODE_HALLUCINATION,
+                                                           Evals.PROMPT_INJECTION
+                                                          ])
+              
+            result_df  = pd.DataFrame(result)
+            # Add system date and time as columns   
+            result_df['Framwork'] = "Uptrain"
+            result_df['date'] = datetime.now().strftime('%Y-%m-%d')
+            result_df['time'] = datetime.now().strftime('%H:%M:%S')
+
+            # Check if the file exists
+            if file_path:
+                # Read the existing CSV file into a DataFrame
+                existing_df = pd.read_csv(file_path)
+                
+                # Append the new DataFrame to the existing one
+                df=pd.concat([existing_df, result_df], axis=0, ignore_index=True)
+                
+
+            # Write the DataFrame to the CSV file
+            df.to_csv(file_path, index=False)
+            print(f"uptrain complete {df.shape}")   
+
+                  
+                                
+        except Exception as e:
+            raise CustomException(e, sys) from e
+
 # To fix the RuntimeWarning, add the following line at the end of your code:
 nest_asyncio.apply()
         

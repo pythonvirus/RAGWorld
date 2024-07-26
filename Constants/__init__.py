@@ -48,7 +48,7 @@ NAMESPACE='EGL'
 
 #LLM Constants
 LLM_NAME = "OpenAI"
-MODEL_NAME= "gpt-3.5-turbo" #"gpt-4-turbo" #"gpt-4o"
+MODEL_NAME= "gpt-4-turbo"#"gpt-3.5-turbo" # #"gpt-4o"
 
 #Output parser Config
 PARSER_NAME="StrOutputParser"

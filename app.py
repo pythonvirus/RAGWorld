@@ -36,12 +36,17 @@ def chat():
          
 
         
-        evaluation_thread = threading.Thread(target=asyncio.run, args=(Evaluation.phoenix_eval(),))
-        evaluation_thread.start()
+        # evaluation_thread = threading.Thread(target=asyncio.run, args=(Evaluation.phoenix_eval(),))
+        # evaluation_thread.start()
         
         
-        evaluation_thread_ragas = threading.Thread(target=Evaluation.ragas_evaluate_rag_system, args=([question],[result],[context1,context2,context3]))
-        evaluation_thread_ragas.start()
+        # evaluation_thread_ragas = threading.Thread(target=Evaluation.ragas_evaluate_rag_system, args=([question],[result],[context1,context2,context3]))
+        # evaluation_thread_ragas.start()
+
+        evaluation_thread_uptrain = threading.Thread(target=Evaluation.uptrain_evaluate_rag_system, args=([question],[result],[context1,context2,context3]))
+        evaluation_thread_uptrain.start()
+
+       
 
        
       
